@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}H&M Clone{% endblock %}</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'HM Sans Regular', Arial, sans-serif;
+        }
+
+        .main-navbar {
+            background-color: white;
+            padding: 30px 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        /* Left-aligned About Us link */
+        .main-navbar .left-links {
+            display: flex;
+            align-items: center;
+        }
+
+        .main-navbar .left-links a {
+            text-decoration: none;
+            color: black;
+            font-size: 14px;
+            margin-right: 20px;
+        }
+
+        /* Centered logo */
+        .logo {
+            font-size: 24px;
+            color: red;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .logo span:first-child,
+        .logo span:last-child {
+            font-size: 30px;
+        }
+
+        .logo span:nth-child(2) {
+            font-size: 14px;
+        }
+
+        /* Right-aligned user links */
+        .main-navbar .right-links {
+            display: flex;
+            align-items: center;
+        }
+
+        .main-navbar .right-links a {
+            text-decoration: none;
+            color: black;
+            font-size: 14px;
+            margin-left: 20px;
+        }
+
+        .secondary-navbar {
+            background-color: white;
+            padding: 15px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .secondary-navbar a {
+            margin: 0 25px;
+            text-decoration: none;
+            color: black;
+            font-size: 15px;
+            font-weight: 300;
+        }
+
+        .secondary-navbar a:hover {
+            text-decoration: underline;
+        }
+
+        /* Flexbox layout for content */
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 20px;
+        }
+
+        /* Sidebar styling */
+        .sidebar {
+            width: 250px;
+            padding: 20px;
+            border-right: 1px solid #ddd;
+            flex-shrink: 0;
+        }
+
+        .category-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .category-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .category-list li {
+            margin: 5px 0;
+        }
+
+        .category-list li a {
+            text-decoration: none;
+            color: #000;
+            font-size: 16px;
+        }
+
+        .category-list li a:hover {
+            color: #ff0000;
+        }
+
+        /* Main content section styling */
+        .main-content {
+            flex-grow: 1;
+            padding: 20px;
+        }
+
+        /* Basic page title and content styling */
+        .main-content h1 {
+            font-size: 2rem;
+            color: #333;
+        }
+
+        .main-content p {
+            font-size: 1rem;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <!-- Main Navbar -->
+    <nav class="main-navbar">
+        <div class="left-links">
+            <a href="{% url 'about' %}">About Us</a>
+        </div>
+        <div class="logo">
+            <span>ℳ</span>
+            <span>&</span>
+            <span>ℳ</span>
+        </div>
+        <div class="right-links">
+            {% if user.is_authenticated %}
+                {% if user.is_staff %}
+                    <!-- Show Add Products link if the user is an admin -->
+                    <a href="{% url 'add_product' %}">Add Products</a>
+                {% else %}
+                    <!-- Show About Us link if the user is a customer -->
+                    <a href="{% url 'about' %}">About</a>
+                {% endif %}
+            {% else %}
+                <a href="#">👤 Sign Up</a>
+                <a href="#">👤 Log In</a>
+                <a href="#">♡ Favourites</a>
+                <a href="#">🛒 Shopping Cart</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <!-- Secondary Navbar -->
+    <nav class="secondary-navbar">
+        <a href="{% url 'men' %}">Men</a>
+        <a href="{% url 'women' %}">Women</a>
+        <a href="{% url 'kids' %}">Kids</a>
+        <a href="{% url 'sale' %}">Sale</a>
+        <a href="{% url 'home' %}">Home</a>
+    </nav>
+
+    <!-- Main Content Block -->
+    <div class="container">
+        <!-- Sidebar with Categories -->
+        <div class="sidebar">
+            <h4 class="category-title">Men</h4>
+            <ul class="category-list">
+                <li><a href="{% url 'men' %}">Shirts</a></li>
+                <li><a href="{% url 'men' %}">Joggers</a></li>
+                <li><a href="{% url 'men' %}">Hoodies</a></li>
+                <li><a href="{% url 'men' %}">Jackets</a></li>
+                <li><a href="{% url 'men' %}">T-Shirts</a></li>
+            </ul>
+
+            <h4 class="category-title">Women</h4>
+            <ul class="category-list">
+                <li><a href="{% url 'women' %}">Dresses</a></li>
+                <li><a href="{% url 'women' %}">Tops</a></li>
+                <li><a href="{% url 'women' %}">Skirts</a></li>
+                <li><a href="{% url 'women' %}">Pants</a></li>
+                <li><a href="{% url 'women' %}">Blouses</a></li>
+            </ul>
+
+            <h4 class="category-title">Kids</h4>
+            <ul class="category-list">
+                <li><a href="{% url 'kids' %}">Boys' Tops</a></li>
+                <li><a href="{% url 'kids' %}">Boys' Pants</a></li>
+                <li><a href="{% url 'kids' %}">Girls' Dresses</a></li>
+                <li><a href="{% url 'kids' %}">Girls' Tops</a></li>
+                <li><a href="{% url 'kids' %}">Shoes</a></li>
+            </ul>
+
+            <h4 class="category-title">Sale</h4>
+            <ul class="category-list">
+                <li><a href="{% url 'sale' %}">Shirts</a></li>
+                <li><a href="{% url 'sale' %}">Jeans</a></li>
+                <li><a href="{% url 'sale' %}">Shoes</a></li>
+                <li><a href="{% url 'sale' %}">Jackets</a></li>
+                <li><a href="{% url 'sale' %}">Accessories</a></li>
+            </ul>
+
+            <h4 class="category-title">Home</h4>
+            <ul class="category-list">
+                <li><a href="{% url 'home' %}">Living Room</a></li>
+                <li><a href="{% url 'home' %}">Bedroom</a></li>
+                <li><a href="{% url 'home' %}">Kitchen</a></li>
+                <li><a href="{% url 'home' %}">Bathroom</a></li>
+                <li><a href="{% url 'home' %}">Decor</a></li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
